@@ -10,8 +10,11 @@ var mongoose = require('mongoose');
 var chalk = require('chalk');
 var error = chalk.bold.red;
 
+
+require("dotenv").config();
+
 var PORT = process.env.PORT || 3000;
-var mongoUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/testapp';
+var mongoUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/brewerydb';
 
 if(!process.env.JWT_SECRET) {
   console.error(error(`ERROR:  Missing process.env.JWT_SECRET.
@@ -35,6 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
 
 app.use(function(req, res){
   res.status(404).render('404');
