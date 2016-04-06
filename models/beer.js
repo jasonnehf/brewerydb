@@ -12,6 +12,11 @@ var beerSchema = new mongoose.Schema({
 		required: true
 	}
 });
+
+beerSchema.statics.fetchExt = function(beerObj, cb) {
+
+}
+
 beerSchema.statics.fetch = function(beerObj, cb) {
 	Beer.findOne({
 		id: beerObj.id
