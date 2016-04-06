@@ -64,6 +64,12 @@ userSchema.statics.authenticate = function(userObj, cb) {
 		});
 	});
 };
+
+userSchema.methods.addBeer = function(beerObj, cb) {
+	this.beersSampled.push({id:beerObj.id, json:beerObj});
+	this.save(cb);
+}
+
 userSchema.statics.register = function(userObj, cb) {
 	bcrypt.hash(userObj.password, 10, function(err, hash) {
 		if (err) {

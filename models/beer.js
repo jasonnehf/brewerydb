@@ -10,12 +10,9 @@ var beerSchema = new mongoose.Schema({
 	json: {
 		type: String,
 		required: true
-	}
+	},
+	comments:[{username:{type:String, required:true}, comment:String}]
 });
-
-beerSchema.statics.fetchExt = function(beerObj, cb) {
-
-}
 
 beerSchema.statics.fetch = function(beerObj, cb) {
 	Beer.findOne({
@@ -27,13 +24,13 @@ beerSchema.statics.fetch = function(beerObj, cb) {
 	});
 };
 
-beerSchema.statics.random = function(beerObj, cb) {
+beerSchema.methods.addComment = function(userObj, comment, cb) {
+	this.comments.push({username:userObj.username, comment:comment});
+	this.save(cb);
 }
 
-beerSchema.statics.create = function(beerObj, cb) {
-	if (err) {
-		return cb(err);
-	}
+beerSchema.statics.store = function(beerObj, cb) {
+	console.log(beerObj.id);
 	Beer.create({
 		id: beerObj.id,
 		json: JSON.stringify(beerObj)

@@ -39,6 +39,7 @@
     "moment": "^2.12.0",
     "mongoose": "^4.4.3",
     "morgan": "^1.6.1",
-    "request": "^2.70.0"
+    "request": "^2.70.0",
+    "request-promise": "^2.0.1"
   }
 }

@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Beer = require('../models/beer');
 var User = require('../models/user');
-var request = require('request');
+var rp = require('request-promise');
+var apikey = process.env.API_KEY;
 
 router.get('/id', function(req, res) {
 	Beer.fetch(req.body, function(err, beers) {
@@ -19,6 +20,29 @@ router.get('/id/:id', function(req, res) {
 });
 
 router.get('/newRandom', User.authMiddleware, function(req, res) {
+	rp('http://api.brewerydb.com/v2/beer/random?key='+apikey)
+	.then( function(newBeer) {
+		var user = req.user;
+		var beer = JSON.parse(newBeer);
+		if(user.beersSampled.indexOf(beer.data.id)===-1) {
+			Beer.store(beer.data, function(err, dbBeer) {
+				res.status(err ? 400 : 200).send(err || dbBeer);
+			});
+		}
+		else {
+			res.redirect('/beers/newRandom');
+		}
+	});
 
-})
+});
+
+router.post('/comment', User.authMiddleware, function(req, res) {
+	Beer.fetch({
+		id: req.body.id
+	}, function(err, beer) {
+		if(err)
+			res.status(400).send(err);
+	})
+
+});
 module.exports = router;
