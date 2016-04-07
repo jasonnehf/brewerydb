@@ -11,12 +11,20 @@ var userSchema = new mongoose.Schema({
 		unique: true,
 		required: true
 	},
+	email:String,
+	name:String,
+	image:String,
 	password: {
 		type: String,
 		required: true
 	},
 	beersSampled: [{
-		type: String
+		id:{
+			type: String,
+			required:true
+		},
+		rating:Number
+
 	}],
 });
 userSchema.statics.authMiddleware = function(req, res, next) {
@@ -65,9 +73,26 @@ userSchema.statics.authenticate = function(userObj, cb) {
 	});
 };
 
-userSchema.methods.addBeer = function(beerObj, cb) {
-	this.beersSampled.push({id:beerObj.id, json:beerObj});
+userSchema.methods.unsample = function(beerid, cb) {
+	this.beersSampled = this.beersSampled.filter(function(e) {
+		return e.id!==beerid;
+	});
 	this.save(cb);
+}
+
+
+userSchema.methods.sampleBeer = function(beerObj, cb) {
+	this.beersSampled.push({id:beerObj.id, rating:beerObj.rating});
+	this.save(cb);
+}
+
+userSchema.methods.rateBeer = function(beerid, rating, cb) {
+	this.beersSampled=this.beersSampled.filter(function(e) {
+		return e.id !== beerid;
+	});
+	this.beersSampled.push({id:beerid, rating:rating});
+	this.save(cb);
+
 }
 
 userSchema.statics.register = function(userObj, cb) {
@@ -77,7 +102,10 @@ userSchema.statics.register = function(userObj, cb) {
 		}
 		User.create({
 			username: userObj.username,
-			password: hash
+			password: hash,
+			email:userObj.email || '',
+			name:userObj.name || '',
+			image:userObj.image || ''
 		}, function(err, user) {
 			if (err) {
 				cb(err);

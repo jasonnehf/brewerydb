@@ -1,0 +1,16 @@
+<h1>Messages</h1>
+
+
+<form name='msgform' class='form-inline'>
+<select class='form-control' name="recipient" id="recipient" ng-options="user.username for user in users" ng-model='selected'></select>
+</form>
+
+<ul>
+	<li ng-repeat='msg in msgs track by $index'>
+		msg.sender<br>
+		msg.recipient<br>
+		msg.subject<br>
+		msg.body<br>
+		msg.sent<br>
+	</li>
+</ul>

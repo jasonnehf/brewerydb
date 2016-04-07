@@ -1,0 +1,45 @@
+body{visibility:hidden;}
+
+.row { margin-bottom:1em; }
+.form-inline,.form-group { margin-bottom:1em; }
+
+input[type='password']{ -webkit-text-security: circle !important;}
+
+textarea:focus, button:focus, input:focus { outline:6px yellow double !important; }
+
+button:hover {
+	background:#888 !important;
+	color:white;
+}
+
+
+* {
+	cursor:url("../img/caret2.png"), auto !important;
+	cursor:url("../img/caret2.png"), default !important;
+	cursor:url("../img/caret2.png"), pointer !important;
+	cursor:url("../img/caret2.png"), text !important;
+
+}
+
+textarea.form-control, input.form-control { color:black; padding-left:0.5em;}
+
+input.form-control::selection {
+  background: yellow; /* WebKit/Blink Browsers */
+}
+
+ .jumbotron {
+
+ 	margin:0;
+	background-color:#a00000;
+	color:white;
+}
+
+.jumbotron-container {
+	padding-top:8px;
+	padding-bottom:8px;
+	padding-left:4.5px;
+	padding-right:4.5px;
+	background-color:#a00000;
+
+	margin-bottom:1em;
+}

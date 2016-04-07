@@ -1,45 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Test App</title>
 
-    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
-    <link rel='stylesheet' href='/css/style.css'/>
+<head>
+	<base href="/" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src='/bower_components/jquery/dist/jquery.min.js'></script>
-    <script src='/bower_components/angular/angular.min.js'></script>
-    <script src='/bower_components/angular-ui-router/release/angular-ui-router.min.js'></script>
-    <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
+	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//bootswatch.com/cerulean/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"> -->
 
-    <script src='/js/bundle.js'></script>
+	<link rel="stylesheet" href="./css/bootstrap.css">
+	<link rel="stylesheet" href="./css/bootstrap-theme.css">
+	<link rel="stylesheet" href="./css/style.css">
 
-  </head>
-  <body ng-app='testApp'>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-default" ng-controller='navbarCtrl'>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-animate.js"></script>
+
+	<!-- <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.5.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+	<script src="//code.jquery.com/jquery-2.2.2.min.js"></script>
+	<script src="./js/bootstrap.js"></script>
+
+	<script src="./js/module.js"></script>
+	<script src="./js/services.js"></script>
+  <script src="./js/controllers.js"></script>
+	<!-- <script src="./js/msg.controllers.js"></script> -->
+	<!-- <script src="./js/user.controllers.js"></script> -->
+
+	<title><%= title %></title>
+</head>
+
+<body ng-app='dosmailApp'>
+	<div class='jumbotron-container'>
+	<div class='jumbotron'>
+
+    <h1><%= title %></h1>
+    <p>Welcome to DOSMail</p>
+  </div></div>
+	<nav ng-controller='navCtrl' class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" ui-sref="home">Test App</a>
+          </button> -->
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+
+
           <ul class="nav navbar-nav">
-            <li><a ui-sref="home">Home</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
+            <li><a ui-sref='home'>Home</a></li>
+            <li ng-if='!username'><a ui-sref='login'>Login</a></li>
+            <li ng-if='!username'><a ui-sref='register'>Register</a></li>
+            <li ng-if='username'><a ui-sref='profile'>Profile</a></li>
+            <li ng-if='username'><a ui-sref='msgs'>Messages</a></li>
 
           </ul>
-        </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-show='username'>Hello {{username}}!</li>
+            <li ng-show='username'>
+              <button ng-click='logout()'
+                      type="button"
+                      class="btn btn-default navbar-btn">Log Out</button>
+            </li>
+          </ul>
+
       </div>
     </nav>
 
-    <ui-view></ui-view>
-
+    <div class="container" ng-controller='navCtrl'>
+      <ui-view></ui-view>
+    </div>
   </body>
 </html>

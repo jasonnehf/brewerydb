@@ -17,12 +17,21 @@ var beerSchema = new mongoose.Schema({
 beerSchema.statics.fetch = function(beerObj, cb) {
 	Beer.findOne({
 		id: beerObj.id
-	}, function(err, beer) {
-		if (err || !beer) {
+	}, function(err, dbBeer) {
+		if (err || !dbBeer) {
 			return cb("Fetch failed.");
 		}
+		return cb(null, dbBeer);
 	});
 };
+
+beerSchema.methods.uncomment = function(userObj, cb) {
+	this.comments = this.comments.filter(function(e) {
+		return e.username !== userObj.username;
+	})
+	this.save(cb);
+
+}
 
 beerSchema.methods.addComment = function(userObj, comment, cb) {
 	this.comments.push({username:userObj.username, comment:comment});
