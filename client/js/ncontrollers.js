@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('dosmailApp');
+var app = angular.module('breweryApp');
 
 app.controller('navCtrl', function($scope, UserService, AuthService) {
   $scope.logout = function() {

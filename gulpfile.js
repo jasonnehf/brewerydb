@@ -33,10 +33,10 @@ gulp.task('js', ['clean:js'], function() {
   return gulp.src('client/js/**/*.js') // input files
     .pipe(sourcemaps.init())
     .pipe(plumber())
-    .pipe(ngAnnotate())
-    .pipe(babel({
-      presets: ['es2015']
-    }))
+    //.pipe(ngAnnotate())
+    //.pipe(babel({
+    //  presets: ['es2015']
+    //}))
     .pipe(concat('bundle.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/js')); // output files
